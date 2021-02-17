@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web AR Project</title>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.5/aframe/build/aframe-ar.js"></script>
+    <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script> <!--A-Frame Event component library-->
+    <script src="https://raw.githubusercontent.com/EditVR/aframe-dialog-popup-component/develop/dist/aframe-dialog-popup-component.js"></script> <!--A-Frame dialog box component library-->
+    <script>
+        AFRAME.registerComponent('ixtc-sample', {
+            
+            init: function() {
+                this.el.addEventListener('model-loaded', () => {
+                    let modelState = false; 
+                    if (modelState) {
+                        this.el.addEventListener('click', function(){
+                            console.log("I was triggered");
+                            const ixtcMarker = document.querySelector("#ixtcMarker");
+                            const ixtcmodel = document.querySelector("#ixtcModel");
+                            
+                            ixtcMarker.addEventListener('click', function(ev, target){
+                                const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
+                                if (ixtcmodel && intersectedElement === ixtcmodel) {
+                                    window.location = 'https://www.google.com.sg/';
+                                }
+                            });
+                        });
+                        modelState = false; 
+                    }
+                });
+            }, 
+        
+            update: function() {}, 
+        });
+    </script>
+</head>
+
+<body>
+    <a-scene embedded arjs='trackingMethod:best; debugUIEnabled:false;' vr-mode-ui="enabled:false;" loading-screen="enabled:false;">
+        <a-assets>
+            <a-asset-item id="ixtc" src="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/model/IXTC.gltf"></a-asset-item>
+            <a-asset-item id="firc" src="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/model/FIRC.gltf"></a-asset-item>
+            <a-asset-item id="smiley" src="https://cdn.rawgit.com/KhronosGroup/glTF-Sample-Models/9176d098/1.0/SmilingFace/glTF/SmilingFace.gltf"></a-asset-item>
+            <a-asset-item id="cube" src="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/model/SimpleCube.gltf"></a-asset-item>
+        </a-assets>
+
+        <!--marker-based: IXTC-->
+        <a-marker id="ixtcMarker" type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-IXTCTracking.patt">
+            
+            <!--GLTF model-->
+            <a-entity id="ixtcModel" gltf-model="#ixtc" scale="0.002 0.002 0.002" rotation="270 0 0" ixtc-sample>
+                <!--<a-entity id="ixtcDialog" position="0 0 -2" dialog-popup="image:https://raw.githubusercontent.com/kristinejoy07/ARProject/main/assets/IXTC-FInal-SLide1.jpg;"></a-entity>-->
+            </a-entity>
+        </a-marker>
+
+        <!--marker-based: FIRC-->
+        <a-marker firc-sample emitevents="true" raycaster="objects: .clickable" cursor="rayOrigin: mouse; fuse: false;" id="fircMarker" type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-vegetable.patt">
+        
+            <!--GLTF model-->
+            <a-entity id="fircModel" gltf-model="#firc" scale="0.001 0.001 0.001" rotation="270 0 0">
+                <!--<a-entity id="fircDialog" position="0 0 -2" dialog-popup="image:https://raw.githubusercontent.com/kristinejoy07/ARProject/main/assets/FIRC-Final-Slides1.jpg;"></a-entity>-->
+            </a-entity>
+        </a-marker>
+
+        <!--marker-based: SMILEY-->
+        <a-marker dog-sample emitevents="true" raycaster="objects: .clickable" cursor="rayOrigin: mouse; fuse: false;" id="dogMarker" type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-dog.patt">
+        
+            <!--GLTF model-->
+            <a-entity id="smileyModel" gltf-model="#smiley" scale="1 1 1" rotation="270 0 0">
+                <!--<a-entity id="dogDialog" position="0 0 -2" dialog-popup="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/assets/IXTC-FInal-SLide2.jpg;"></a-entity>-->
+            </a-entity>
+        </a-marker>
+
+        <!--marker-based: CUBE-->
+        <a-marker cube-sample emitevents="true" raycaster="objects: .clickable" cursor="rayOrigin: mouse; fuse: false;" id="isamMarker" type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-ISAM-Full.patt">
+        
+            <!--GLTF model-->
+            <a-entity id="cubeModel" gltf-model="#cube" scale="0.003 0.003 0.003">
+                <!--<a-entity id="isamDialog" position="0 0 -2" dialog-popup="image:https://raw.githubusercontent.com/kristinejoy07/ARProject/main/assets/FIRC-Final-Slides2.jpg;"></a-entity>-->
+            </a-entity>
+        </a-marker>
+
+        <a-entity camera></a-entity>
+    </a-scene>
+</body>
+</html>

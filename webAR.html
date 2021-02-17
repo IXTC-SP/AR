@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web AR Project</title>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0"> Responsive-->
+    <link rel="stylesheet" href="style/style.css">
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script> <!--A-Frame library-->
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script> <!--AR.js library-->
+    <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/loaders/GLTFLoader.js"></script> <!--THREE.js GLTF model loader library-->
+    <script src="js/aframe-gui.js"></script> <!--A-Frame GUI Components library-->
+    <script src="js/webARScript.js"></script> 
+</head>
+
+<body>
+    <!--Initialise a-scene-->
+    <a-scene embedded arjs='trackingMethod:best; debugUIEnabled:false;' vr-mode-ui="enabled:false;">
+
+        <!--Initialise & load GLTF models onto a-scene-->
+        <a-assets>
+            <a-asset-item id="ixtc" src="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/model/IXTC.gltf"></a-asset-item>
+            <a-asset-item id="firc" src="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/model/FIRC.gltf"></a-asset-item>
+        </a-assets>
+
+        <!--marker-based: IXTC-->
+        <a-marker type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-IXTCTracking.patt">
+            
+            <!--GLTF model-->
+            <a-entity gltf-model="#ixtc" scale="0.002 0.002 0.002" rotation="270 0 0"></a-entity>
+        
+            <!--Modal A-Frame GUI Button-->
+            <a-gui-flex-container
+                flex-direction="row"
+                justify-content="center"
+                component-padding="0.5"
+                opacity="0.7"
+                width="3" height="2"
+                position="0 1.5 0"
+                rotation="270 0 0"
+                scale="0.2 0.2 0.2">
+
+                <a-gui-button
+                    id="btnIXTC"
+                    width="2.5" height="1"
+                    onclick="openIXTCModal();currentIXTCSlide(1)"
+                    value="IXTC"
+                    margin="0 0.05 0"></a-gui-button>
+            </a-gui-flex-container>
+        </a-marker>
+
+        <!--marker-based: FIRC-->
+        <a-marker type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-dog.patt">
+        
+            <!--GLTF model-->
+            <a-entity gltf-model="#firc" scale="0.001 0.001 0.001" rotation="270 0 0"></a-entity>
+
+            <!--Modal A-Frame GUI Button-->
+            <a-gui-flex-container
+                flex-direction="row"
+                justify-content="center"
+                component-padding="0.5"
+                opacity="0.7"
+                width="3" height="2"
+                position="0 1.5 0"
+                rotation="270 0 0"
+                scale="0.2 0.2 0.2">
+
+                <a-gui-button
+                    id="btnFIRC"
+                    width="2.5" height="1"
+                    onclick="openFIRCModal();currentFIRCSlide(1)"
+                    value="FIRC"
+                    margin="0 0.05 0"></a-gui-button>
+            </a-gui-flex-container>
+        </a-marker>
+
+        <!-- Camera + cursor. -->
+        <a-entity id="cameraRig" position="0 0 0">
+            <a-camera look-controls wasd-controls position="0 0 0">
+                <a-gui-cursor 
+                    id="cursor"
+                    raycaster="objects: [gui-interactable]"
+                    fuse="true" fuse-timeout="2000"
+                    design="cross">
+                </a-gui-cursor>
+            </a-camera> 
+        </a-entity>
+    </a-scene>
+
+    
+        <!--IXTC Modal-->
+        <div id="ixtcDesc" class="modal">
+            <span class="close1" onclick="closeIXTCModal()">&times;</span>
+            <div class="modal-content">
+                <div class="myIXTCSlides">
+                    <img src="assets/IXTC-FInal-SLide1.jpg" alt="IXTC Final Slide 1" style="max-width:100%;border-radius:10%;"> 
+                </div>
+
+                <div class="myIXTCSlides">
+                    <img src="assets/IXTC-FInal-SLide2.jpg" alt="IXTC Final Slide 2" style="max-width:100%;border-radius:10%;">
+                </div>
+
+                <div class="myIXTCSlides">
+                    <img src="assets/IXTC-FInal-SLide3.jpg" alt="IXTC Final Slide 3" style="max-width:100%;border-radius:10%;">
+                </div>
+
+                    
+                <a class="prev" onclick="plusIXTCSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusIXTCSlides(1)">&#10095;</a>
+            </div>
+
+        </div>
+
+        <!--FIRC Modal-->
+        <div id="fircDesc" class="modal">
+            <span class="close2" onclick="closeFIRCModal()">&times;</span>
+            <div class="modal-content">
+                <div class="myFIRCSlides">
+                    <img src="assets/FIRC-Final-Slides1.jpg" alt="FIRC Final Slide 1" style="max-width:100%;border-radius:10%;">
+                </div>
+
+                <div class="myFIRCSlides">
+                    <img src="assets/FIRC-Final-Slides2.jpg" alt="FIRC Final Slide 1" style="max-width:100%;border-radius:10%;">
+                </div>
+
+                <div class="myFIRCSlides">
+                    <img src="assets/FIRC-Final-Slides3.jpg" alt="FIRC Final Slide 1" style="max-width:100%;border-radius:10%;">
+                </div>
+
+                    
+                <a class="prev" onclick="plusFIRCSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusFIRCSlides(1)">&#10095;</a>
+
+            </div>
+        </div>
+</body>
+</html>
+
+
+
+
+
+
+<a-entity camera></a-entity>
+
+
+
+
