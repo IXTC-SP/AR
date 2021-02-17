@@ -18,12 +18,15 @@
 
         <!--Initialise & load GLTF models onto a-scene-->
         <a-assets>
-            <a-asset-item id="ixtc" src="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/model/IXTC.gltf"></a-asset-item>
-            <a-asset-item id="firc" src="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/model/FIRC.gltf"></a-asset-item>
+            <!--a-asset-item id="ixtc" src="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/model/IXTC.gltf"></a-asset-item-->
+            <!--a-asset-item id="firc" src="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/model/FIRC.gltf"></a-asset-item-->
+            <a-asset-item id="ixtc" src="https://github.com/IXTC-SP/AR/blob/main/model/IXTC.gltf"></a-asset-item>
+            <a-asset-item id="firc" src="https://github.com/IXTC-SP/AR/blob/main/model/FIRC.gltf"></a-asset-item>
         </a-assets>
 
         <!--marker-based: IXTC-->
-        <a-marker type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-IXTCTracking.patt">
+        <!--a-marker type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-IXTCTracking.patt"-->
+        <a-marker type="pattern" url="https://github.com/IXTC-SP/AR/blob/main/marker/pattern-IXTCTracking.patt">
             
             <!--GLTF model-->
             <a-entity gltf-model="#ixtc" scale="0.002 0.002 0.002" rotation="270 0 0"></a-entity>
@@ -49,7 +52,8 @@
         </a-marker>
 
         <!--marker-based: FIRC-->
-        <a-marker type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-dog.patt">
+        <!--a-marker type="pattern" url="https://raw.githubusercontent.com/kristinejoy07/ARProject/main/marker/pattern-dog.patt"-->
+        <a-marker type="pattern" url="https://github.com/IXTC-SP/AR/blob/main/marker/pattern-dogTracking.patt">
         
             <!--GLTF model-->
             <a-entity gltf-model="#firc" scale="0.001 0.001 0.001" rotation="270 0 0"></a-entity>
